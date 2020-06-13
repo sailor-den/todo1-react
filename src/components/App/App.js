@@ -18,7 +18,7 @@ export default class App extends Component {
     this.state = {
       todoItem: todoData,
       term: '' ,
-      filter: ''
+      filter: 'all'
     };
 
     
@@ -139,20 +139,25 @@ export default class App extends Component {
 
   filterPost(items, filter) {
     if(filter === 'like') {
-      items.filter(item => {item.like})
+      return items.filter(item => item.like)
     } else {
       return items
     }
+  };
+
+  onFilterSelect = (filter) => {
+    this.setState({filter})
   }
 
 
   render() {
-    const {todoItem, term} = this.state;
+    const {todoItem, term, filter} = this.state;
     // const allPosts = todoItem.map(item => item).length;
     const allPosts = todoItem.length;
     const liked = todoItem.filter(item => item.like === true).length;
     // console.log(liked)
-    const visiblePosts = this.searchPost(todoItem, term);
+    const visiblePosts = this.filterPost(this.searchPost(todoItem, term), filter);
+    // const visiblePosts = this.searchPost(todoItem, term);
     console.log(visiblePosts)
     return(
       <div className="app"> 
@@ -164,7 +169,10 @@ export default class App extends Component {
           <SearchPanel
             onUpdateSearch={this.onUpdateSearch}
           />
-          <Filter/>
+          <Filter
+            filter={filter}
+            onFilterSelect={this.onFilterSelect}
+            />
         </div>
         <List 
           posts={visiblePosts} 
