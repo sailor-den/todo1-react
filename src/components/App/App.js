@@ -158,7 +158,11 @@ export default class App extends Component {
     // console.log(liked)
     const visiblePosts = this.filterPost(this.searchPost(todoItem, term), filter);
     // const visiblePosts = this.searchPost(todoItem, term);
-    console.log(visiblePosts)
+    // console.log(visiblePosts)
+   
+   
+
+
     return(
       <div className="app"> 
         <Header 
